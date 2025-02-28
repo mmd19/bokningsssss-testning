@@ -1,0 +1,34 @@
+﻿@page
+@model Projektarbete_Bokningssystem.Pages.HomeModel
+@{
+}
+
+{
+    ViewData["Title"] = "Hem";
+}
+
+<div class="text-center mt-4">
+    <h1>Välkommen @Model.UserName!</h1>
+    <p class="lead">Vad vill du göra idag?</p>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Gör en bokning</h5>
+                    <p class="card-text">Boka ett studierum för en hel dag.</p>
+                    <a asp-page="/Bookings/Create" class="btn btn-primary">Gå till bokning</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Mina bokningar</h5>
+                    <p class="card-text">Se och hantera dina befintliga bokningar.</p>
+                    <a asp-page="/Bookings/MyBookings" class="btn btn-primary">Visa mina bokningar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

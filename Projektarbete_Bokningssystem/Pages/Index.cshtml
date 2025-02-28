@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Välkommen";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">Välkommen till Newtons bokningssystem</h1>
+    <p class="lead">Här kan du boka studierum för dina grupparbeten och studier.</p>
+
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Logga in eller registrera dig för att fortsätta</h5>
+                    <p class="card-text">Du behöver ett konto för att kunna boka studierum.</p>
+                    <div class="mt-3">
+                        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+                        <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

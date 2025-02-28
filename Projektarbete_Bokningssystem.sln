@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projektarbete_Bokningssystem", "Projektarbete_Bokningssystem\Projektarbete_Bokningssystem.csproj", "{1E691964-2C23-4233-B649-76A0D9C6275C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E691964-2C23-4233-B649-76A0D9C6275C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E691964-2C23-4233-B649-76A0D9C6275C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E691964-2C23-4233-B649-76A0D9C6275C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E691964-2C23-4233-B649-76A0D9C6275C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91EE5801-59E8-4CA0-8B7E-5F1A970F8BEF}
+	EndGlobalSection
+EndGlobal
