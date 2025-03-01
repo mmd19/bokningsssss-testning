@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Projektarbete_Bokningssystem.Pages.Bookings
 {
+    [Authorize]
     public class MyBookingsModel : PageModel
     {
         private readonly ApplicationDbContext _context;
