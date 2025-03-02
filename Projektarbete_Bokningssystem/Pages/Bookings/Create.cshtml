@@ -4,15 +4,16 @@
     ViewData["Title"] = "Boka studierum";
 }
 
-@if (TempData["DebugMessage"] != null)
-{
-    <div class="alert alert-info mt-3">@TempData["DebugMessage"]</div>
-}
-
 <h1>Boka studierum</h1>
 
 <div class="row">
     <div class="col-md-6">
+        @if (!string.IsNullOrEmpty(ViewData["Message"] as string))
+        {
+            <div class="alert @(ViewData["MessageType"] == "success" ? "alert-success" : "alert-danger")">
+                @ViewData["Message"]
+            </div>
+        }
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div> @* Visa valideringsmeddelanden *@
             <div class="form-group mb-3">
