@@ -24,21 +24,23 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
         [BindProperty]
         public Booking Booking { get; set; }
 
-        public SelectList RoomList { get; set; }
+        // Property för att lagra bokningsdata för kalendern
+        public List<object> BookingEvents { get; set; }
+
+        public SelectList RoomList { get; set; } //Bindas till en dropdown meny
 
         public void OnGet()
         {
             // Kolla om det finns några studierum i databasen
             if (!_context.StudyRooms.Any())
             {
-                // Om inte, skapa tre grundläggande rum
+            // Om inte, skapa tre grundläggande rum
                 var rooms = new List<StudyRoom>
             {
                 new StudyRoom { Name = "Studierum 1" },
                 new StudyRoom { Name = "Studierum 2" },
                 new StudyRoom { Name = "Studierum 3" }
             };
-
                 _context.StudyRooms.AddRange(rooms);
                 _context.SaveChanges();
             }
@@ -51,6 +53,22 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             {
                 BookingDate = DateTime.Today
             };
+
+            // Hämta bokningar från databasen för kalendern
+            var bookings = _context.Bookings
+                .Include(b => b.StudyRoom)
+                .Where(b => b.Status == BookingStatus.Confirmed)
+                .ToList();
+
+            // Konvertera till FullCalendar-format
+            BookingEvents = bookings.Select(b => new
+            {
+                id = b.Id,
+                title = b.StudyRoom.Name + " (Bokat)",
+                start = b.BookingDate.ToString("yyyy-MM-dd"),
+                roomId = b.StudyRoomId,
+                allDay = true
+            }).ToList<object>();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -92,6 +110,7 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index", new { message = "Bokning skapad framgångsrikt!" });
+
         }
     }
 }

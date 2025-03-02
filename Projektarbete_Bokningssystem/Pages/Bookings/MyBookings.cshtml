@@ -1,9 +1,6 @@
 ﻿@page
 @model Projektarbete_Bokningssystem.Pages.Bookings.MyBookingsModel
 @{
-}
-
-{
     ViewData["Title"] = "Mina bokningar";
 }
 
@@ -11,47 +8,50 @@
 
 @if (!string.IsNullOrEmpty(Model.StatusMessage))
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         @Model.StatusMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Stäng"></button>
     </div>
 }
 
-@if (!Model.Bookings.Any())
+@if (Model.Bookings.Any())
 {
-    <div class="alert alert-info">
-        Du har inga aktiva bokningar. <a asp-page="Create">Skapa en ny bokning</a>.
+    <div class="table-responsive mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rum</th>
+                    <th>Datum</th>
+                    <th>Bokad</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td>@booking.StudyRoom.Name</td>
+                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                        <td>@booking.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="id" value="@booking.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger">Avboka</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
 else
 {
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Rum</th>
-                <th>Datum</th>
-                <th>Beskrivning</th>
-                <th>Åtgärder</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var booking in Model.Bookings)
-            {
-                <tr>
-                    <td>@booking.StudyRoom.Name</td>
-                    <td>@booking.BookingDate.ToShortDateString()</td>
-                    <td>
-                        <form method="post">
-                            <input type="hidden" name="id" value="@booking.Id" />
-                            <button type="submit" class="btn btn-danger btn-sm">Avboka</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="alert alert-info mt-4">
+        Du har inga aktuella bokningar.
+    </div>
 }
 
-<div class="mt-3">
-    <a asp-page="Create" class="btn btn-primary">Boka nytt rum</a>
-    <a asp-page="/Index" class="btn btn-secondary">Tillbaka till startsidan</a>
+<div class="mt-4">
+    <a asp-page="./Create" class="btn btn-primary">Boka ett rum</a>
 </div>

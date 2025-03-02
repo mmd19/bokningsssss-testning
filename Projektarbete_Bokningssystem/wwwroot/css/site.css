@@ -20,3 +20,41 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Kalender stilar */
+#calendar {
+    margin-top: 10px;
+    min-height: 450px;
+    border-radius: 4px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Dölj helgdagar */
+.fc-day.fc-day-sat, .fc-day.fc-day-sun,
+.fc-day-top.fc-day-sat, .fc-day-top.fc-day-sun {
+    display: none;
+}
+
+/* Justera bredden för vardagar */
+.fc-day, .fc-day-top {
+    width: 20% !important; /* 5 dagar = 20% per dag */
+}
+
+/* Stil för bokningstitel i kalender */
+.fc-event-title {
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+/* Hovra över ett datum */
+.fc-day:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+/* Kalender responsivitet på mindre skärmar */
+@media (max-width: 768px) {
+    #calendar {
+        margin-top: 20px;
+    }
+}
