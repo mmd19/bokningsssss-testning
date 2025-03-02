@@ -43,17 +43,9 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 .OrderBy(b => b.BookingDate)
                 .ToListAsync();
 
-            // Logga antalet bokningar
-            Console.WriteLine($"Antal bokningar: {Bookings.Count}");
-
-            // Logga detaljer om varje bokning
-            foreach (var booking in Bookings)
-            {
-                Console.WriteLine($"Bokning: {booking.StudyRoom?.Name ?? "Inget rum"}, Datum: {booking.BookingDate}");
-            }
-
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var user = await _userManager.GetUserAsync(User);

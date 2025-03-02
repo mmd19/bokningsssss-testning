@@ -34,7 +34,7 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             // Kolla om det finns några studierum i databasen
             if (!_context.StudyRooms.Any())
             {
-            // Om inte, skapa tre grundläggande rum
+                // Om inte, skapa tre grundläggande rum
                 var rooms = new List<StudyRoom>
             {
                 new StudyRoom { Name = "Studierum 1" },
@@ -73,25 +73,39 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
-                return Page();
-            }
-
             // Hämta inloggad användare
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return Challenge(); // Omdirigera till inloggning
+                return Challenge();
             }
 
-            // Sätt användare för bokningen
+            // Sätt användare för bokningen INNAN modelltillståndsvalidering
             Booking.UserId = user.Id;
             Booking.CreatedAt = DateTime.Now;
             Booking.Status = BookingStatus.Confirmed;
 
-            // Kontrollera om rummet redan är bokat det valda datumet
+            // Ta bort validering för navigeringsegenskaper som kommer att hanteras automatiskt
+            ModelState.Remove("Booking.User");
+            ModelState.Remove("Booking.StudyRoom");
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new {
+                        Property = x.Key,
+                        Errors = x.Value.Errors.Select(e => e.ErrorMessage).ToList()
+                    })
+                    .ToList();
+
+                TempData["DebugMessage"] = $"ModelState.IsValid är false. Fel: {System.Text.Json.JsonSerializer.Serialize(errors)}";
+
+                RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
+                return Page();
+            }
+
+            // Kontrollera om rummet redan är bokat
             var existingBooking = await _context.Bookings
                 .Where(b => b.StudyRoomId == Booking.StudyRoomId &&
                         b.BookingDate.Date == Booking.BookingDate.Date &&
@@ -105,13 +119,22 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 return Page();
             }
 
-            // Spara bokningen
-            _context.Bookings.Add(Booking);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index", new { message = "Bokning skapad framgångsrikt!" });
-
+            try
+            {
+                _context.Bookings.Add(Booking);
+                await _context.SaveChangesAsync();
+                TempData["DebugMessage"] = "Bokning sparad framgångsrikt";
+                return RedirectToPage("./Index", new { message = "Bokning skapad framgångsrikt!" });
+            }
+            catch (Exception ex)
+            {
+                TempData["DebugMessage"] = "Fel vid sparande: " + ex.Message;
+                ModelState.AddModelError(string.Empty, "Ett fel uppstod när bokningen skulle sparas.");
+                RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
+                return Page();
+            }
         }
     }
 }
+
 

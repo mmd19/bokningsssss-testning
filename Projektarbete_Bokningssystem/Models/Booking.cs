@@ -8,7 +8,7 @@ namespace Projektarbete_Bokningssystem.Models
         public int Id { get; set; }
 
         // Foreign keys
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public int StudyRoomId { get; set; }
 
         // Datum för bokningen (en hel dag?)
