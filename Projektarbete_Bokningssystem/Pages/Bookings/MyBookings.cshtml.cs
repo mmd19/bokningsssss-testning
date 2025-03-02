@@ -63,11 +63,20 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 return NotFound();
             }
 
-            // Avboka (sätt status till Cancelled)
-            booking.Status = BookingStatus.Cancelled;
-            await _context.SaveChangesAsync();
+            try
+            {
+                // Ta bort bokningen från databasen
+                _context.Bookings.Remove(booking);
+                await _context.SaveChangesAsync(); // Spara ändringarna till databasen
 
-            StatusMessage = "Bokningen har avbokats.";
+                StatusMessage = "Bokningen har tagits bort.";
+            }
+            catch (Exception ex)
+            {
+                // Hantera eventuella fel, exempelvis logga
+                StatusMessage = "Ett fel uppstod när bokningen skulle tas bort.";
+            }
+
             return RedirectToPage();
         }
     }

@@ -2,10 +2,11 @@
 @model Projektarbete_Bokningssystem.Pages.HomeModel
 @{
     ViewData["Title"] = "Hem";
+    var userName = Model.UserName.Split('@')[0];
 }
 
 <div class="text-center mt-4">
-    <h1>Välkommen @Model.UserName!</h1>
+    <h1>Välkommen @userName!</h1>
     <p class="lead">Vad vill du göra idag?</p>
 
     <div class="row mt-5">
