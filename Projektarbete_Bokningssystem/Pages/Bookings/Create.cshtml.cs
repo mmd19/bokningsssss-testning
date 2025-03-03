@@ -108,9 +108,9 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             {
                 _context.Bookings.Add(Booking);
                 await _context.SaveChangesAsync();
-                ViewData["Message"] = "Bokning sparad!";
-                ViewData["MessageType"] = "success";
-                return Page();
+                TempData["Message"] = "Bokning sparad!";
+                TempData["MessageType"] = "success";
+                return RedirectToPage("/Bookings/MyBookings");
             }
             catch (Exception ex)
             {

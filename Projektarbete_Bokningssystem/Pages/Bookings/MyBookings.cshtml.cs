@@ -43,6 +43,12 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 .OrderBy(b => b.BookingDate)
                 .ToListAsync();
 
+            // Läs in TempData om det finns
+            if (TempData["Message"] != null)
+            {
+                StatusMessage = TempData["Message"].ToString();
+            }
+
             return Page();
         }
 
