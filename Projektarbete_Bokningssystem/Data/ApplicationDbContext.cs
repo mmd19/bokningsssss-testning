@@ -31,9 +31,9 @@ public class ApplicationDbContext : IdentityDbContext
 
         // Skapa tre studierum
         modelBuilder.Entity<StudyRoom>().HasData(
-            new StudyRoom { Id = 1, Name = "Studierum 1" },
-            new StudyRoom { Id = 2, Name = "Studierum 2" },
-            new StudyRoom { Id = 3, Name = "Studierum 3" }
+            new StudyRoom { Id = 1, Name = "Jupiter" },
+            new StudyRoom { Id = 2, Name = "Telescope" },
+            new StudyRoom { Id = 3, Name = "Science" }
         );
     }
 }
