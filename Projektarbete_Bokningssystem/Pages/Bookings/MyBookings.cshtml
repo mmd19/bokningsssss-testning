@@ -36,6 +36,7 @@
                         <td>
                             <form method="post">
                                 <input type="hidden" name="id" value="@booking.Id" />
+                                <a asp-page="/.Edit" asp-route-id="@booking.Id" class="btn btn-sm btn-primary">Ändra bokning</a> @*knapp som skickar en till en ny sida*@
                                 <button type="submit" class="btn btn-sm btn-danger">Avboka</button>
                             </form>
                         </td>
