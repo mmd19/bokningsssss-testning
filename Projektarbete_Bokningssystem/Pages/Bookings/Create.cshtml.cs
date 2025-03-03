@@ -29,6 +29,27 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
 
         public SelectList RoomList { get; set; } //Bindas till en dropdown meny
 
+        public void LoadBookingData()
+        {
+            // Hämta rum för dropdown-listan
+            RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
+
+            // Hämta bokningar för kalendern
+            var bookings = _context.Bookings
+                .Include(b => b.StudyRoom)
+                .Where(b => b.Status == BookingStatus.Confirmed)
+                .ToList();
+
+            // Konvertera till FullCalendar-format
+            BookingEvents = bookings.Select(b => new
+            {
+                id = b.Id,
+                title = b.StudyRoom.Name + " (Bokat)",
+                start = b.BookingDate.ToString("yyyy-MM-dd"),
+                roomId = b.StudyRoomId,
+                allDay = true
+            }).ToList<object>();
+        }
         public void OnGet()
         {
             // Kolla om det finns några studierum i databasen
@@ -45,30 +66,14 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 _context.SaveChanges();
             }
 
-            // Hämta rum för dropdown-listan
-            RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
-
             // Sätt dagens datum som standard
             Booking = new Booking
             {
                 BookingDate = DateTime.Today
             };
 
-            // Hämta bokningar från databasen för kalendern
-            var bookings = _context.Bookings
-                .Include(b => b.StudyRoom)
-                .Where(b => b.Status == BookingStatus.Confirmed)
-                .ToList();
-
-            // Konvertera till FullCalendar-format
-            BookingEvents = bookings.Select(b => new
-            {
-                id = b.Id,
-                title = b.StudyRoom.Name + " (Bokat)",
-                start = b.BookingDate.ToString("yyyy-MM-dd"),
-                roomId = b.StudyRoomId,
-                allDay = true
-            }).ToList<object>();
+            // Ladda bokningsdata
+            LoadBookingData();
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -100,7 +105,10 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             if (existingBooking != null)
             {
                 ModelState.AddModelError(string.Empty, "Detta rum är redan bokat för det valda datumet.");
-                RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
+
+                // Ladda om bokningsdata så att kalendern visas korrekt
+                LoadBookingData();
+                
                 return Page();
             }
 
@@ -117,6 +125,10 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 // Optionally log the exception
                 ViewData["Message"] = "Det uppstod ett fel vid bokningen.";
                 ViewData["MessageType"] = "danger";
+
+                // Ladda om bokningsdata så att kalendern visas korrekt
+                LoadBookingData();
+
                 return Page();
             }
         }
