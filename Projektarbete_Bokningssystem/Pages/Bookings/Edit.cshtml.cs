@@ -84,7 +84,7 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
 
             // Kontrollera att bokningen tillhör användaren
             var originalBooking = await _context.Bookings
-                .FirstOrDefaultAsync(b => b.Id == Booking.Id && b.UserId == user.Id);
+                .FirstOrDefaultAsync(b => b.Id == Booking.Id || b.UserId == user.Id);
 
             if (originalBooking == null)
             {
