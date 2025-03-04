@@ -85,6 +85,19 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 return Challenge();
             }
 
+            // Kontrollera om användaren redan har 3 bokningar
+            var userBookingsCount = await _context.Bookings
+                .Where(b => b.UserId == user.Id && b.Status == BookingStatus.Confirmed)
+                .CountAsync();
+
+            if (userBookingsCount >= 3)
+            {
+                ModelState.AddModelError(string.Empty, "Du har redan 3 bokningar, ta bort en bokning innan du gör en ny");
+                // Ladda om bokningsdata så att kalendern visas korrekt
+                LoadBookingData();
+                return Page();
+            }
+
             // Sätt användare för bokningen INNAN validering av formulär
             Booking.UserId = user.Id;
             Booking.CreatedAt = DateTime.Now;
