@@ -111,6 +111,8 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
             }
             else
             {
+                // Lägg till en loggutskrift här
+                ViewData["Message"] = "Else körs";
                 // Uppdatera endast de fält som behövs
                 originalBooking.StudyRoomId = Booking.StudyRoomId;
                 originalBooking.BookingDate = Booking.BookingDate;
