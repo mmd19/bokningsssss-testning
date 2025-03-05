@@ -54,6 +54,7 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
+            //Hitta användaren
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
