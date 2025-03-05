@@ -30,6 +30,7 @@ namespace Projektarbete_Bokningssystem.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
@@ -37,7 +38,8 @@ namespace Projektarbete_Bokningssystem.Areas.Identity.Pages.Account
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,6 +48,7 @@ namespace Projektarbete_Bokningssystem.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -126,8 +129,11 @@ namespace Projektarbete_Bokningssystem.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    // Hämta admin-mejladresser från appsettings.json
+                    var adminEmails = _configuration.GetSection("AdminEmails").Get<List<string>>();
+
                     // Kontrollera om användaren ska vara admin
-                    if (Input.Email.ToLower() == "admin@gmail.com")
+                    if (adminEmails != null && adminEmails.Contains(Input.Email.ToLower()))
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
                     }
