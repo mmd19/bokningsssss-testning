@@ -1,0 +1,66 @@
+﻿@page
+@model Projektarbete_Bokningssystem.Pages.AdminBookings.AdminCreateModel
+@{
+    ViewData["Title"] = "Skapa bokning (Admin)";
+}
+
+<h1>Skapa bokning (Admin)</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        @if (!string.IsNullOrEmpty(ViewData["Message"] as string))
+        {
+            <div class="alert @(ViewData["MessageType"] == "success" ? "alert-success" : "alert-danger")">
+                @ViewData["Message"]
+            </div>
+        }
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="SelectedUserId">Välj användare</label>
+                <select asp-for="SelectedUserId" class="form-control" asp-items="Model.UserList">
+                    <option value="">-- Välj användare --</option>
+                </select>
+                <span asp-validation-for="SelectedUserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Booking.StudyRoomId">Välj rum</label>
+                <select asp-for="Booking.StudyRoomId" class="form-control" asp-items="Model.RoomList">
+                    <option value="">-- Välj rum --</option>
+                </select>
+                <span asp-validation-for="Booking.StudyRoomId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Booking.BookingDate">Välj datum</label>
+                <input asp-for="Booking.BookingDate" class="form-control" type="date" />
+                <span asp-validation-for="Booking.BookingDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Boka" class="btn btn-primary" />
+                <a asp-page="/Admin/Bookings" class="btn btn-secondary">Avbryt</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <div id="calendar"></div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    @using Newtonsoft.Json
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/locales/sv.js"></script>
+
+    <script>
+        var bookingEvents = @Html.Raw(JsonConvert.SerializeObject(Model.BookingEvents ?? new List<object>()));
+        initBookingCalendar(bookingEvents);
+    </script>
+}

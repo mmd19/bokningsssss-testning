@@ -50,21 +50,33 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 allDay = true
             }).ToList<object>();
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Kolla om det finns några studierum i databasen
-            if (!_context.StudyRooms.Any())
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                // Om inte, skapa tre grundläggande rum
-                var rooms = new List<StudyRoom>
-            {
-                new StudyRoom { Name = "Studierum 1" },
-                new StudyRoom { Name = "Studierum 2" },
-                new StudyRoom { Name = "Studierum 3" }
-            };
-                _context.StudyRooms.AddRange(rooms);
-                _context.SaveChanges();
+                return Challenge();
             }
+
+            // Kontrollera om användaren är admin och omdirigera om det behövs
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return RedirectToPage("/Admin/AdminCreate");
+            }
+
+            //// Kolla om det finns några studierum i databasen
+            //if (!_context.StudyRooms.Any())
+            //{
+            //    // Om inte, skapa tre grundläggande rum
+            //    var rooms = new List<StudyRoom>
+            //{
+            //    new StudyRoom { Name = "Studierum 1" },
+            //    new StudyRoom { Name = "Studierum 2" },
+            //    new StudyRoom { Name = "Studierum 3" }
+            //};
+            //    _context.StudyRooms.AddRange(rooms);
+            //    await _context.SaveChangesAsync();
+            //}
 
             // Sätt dagens datum som standard
             Booking = new Booking
@@ -74,6 +86,8 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
 
             // Ladda bokningsdata
             LoadBookingData();
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
