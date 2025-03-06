@@ -50,25 +50,34 @@ namespace Projektarbete_Bokningssystem.Pages.Admin
         }
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            //Hämta användaren
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return Challenge();
             }
 
-            // Hitta bokningen och kontrollera att den tillhör aktuell användare
-            Booking = await _context.Bookings
-                .FirstOrDefaultAsync(b => b.Id == id && b.UserId == user.Id);
+            // Kontrollera om användaren är admin
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+
+            // Om användaren inte är admin, kontrollera om bokningen tillhör användaren
+            if (!isAdmin)
+            {
+                Booking = await _context.Bookings
+                    .FirstOrDefaultAsync(b => b.Id == id && b.UserId == user.Id);
+            }
+            else
+            {
+                // Om admin, hämta bokningen utan att kontrollera userId
+                Booking = await _context.Bookings
+                    .FirstOrDefaultAsync(b => b.Id == id);
+            }
 
             if (Booking == null)
             {
                 return NotFound();
             }
 
-            // Ladda rumslistan
-            RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
-
+            // Ladda rumslistan och bokningsdata
             LoadBookingData();
 
             return Page();
