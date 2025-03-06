@@ -1,4 +1,60 @@
 ﻿@page
-@model Projektarbete_Bokningssystem.Pages.AdminBookings.AllBookingsModel
+@model Projektarbete_Bokningssystem.Pages.Admin.AllBookingsModel
 @{
+    ViewData["Title"] = "Alla bokningar";
 }
+
+<h1>Alla bokningar</h1>
+
+@if (!string.IsNullOrEmpty(Model.StatusMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Model.StatusMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Stäng"></button>
+    </div>
+}
+
+@if (Model.Bookings.Any())
+{
+    <div class="table-responsive mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rum</th>
+                    <th>Datum</th>
+                    <th>Bokad</th>
+                    <th>Användare</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var booking in Model.Bookings)
+                {
+                    <tr>
+                        <td>@booking.StudyRoom.Name</td>
+                        <td>@booking.BookingDate.ToString("yyyy-MM-dd")</td>
+                        <td>@booking.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@booking.User?.Email</td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="id" value="@booking.Id" />
+                                <a href="/Admin/AdminEdit/@booking.Id" class="btn btn-sm btn-primary">Ändra bokning</a>
+                                <button type="submit" class="btn btn-sm btn-danger">Avboka</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info mt-4">
+        Det finns inga aktuella bokningar.
+    </div>
+}
+
+<div class="mt-4">
+    <a asp-page="./AdminCreate" class="btn btn-primary">Boka ett rum</a>
+</div>

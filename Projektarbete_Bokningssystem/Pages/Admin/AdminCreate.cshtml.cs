@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Projektarbete_Bokningssystem.Data;
 using Projektarbete_Bokningssystem.Models;
 
-namespace Projektarbete_Bokningssystem.Pages.AdminBookings
+namespace Projektarbete_Bokningssystem.Pages.Admin
 {
     [Authorize(Roles ="Admin")]
     public class AdminCreateModel : PageModel
@@ -115,7 +115,7 @@ namespace Projektarbete_Bokningssystem.Pages.AdminBookings
                 await _context.SaveChangesAsync();
                 TempData["Message"] = "Bokning skapad!";
                 TempData["MessageType"] = "success";
-                return RedirectToPage("/AdminBookings/AllBookings");
+                return RedirectToPage("/Admin/AllBookings");
             }
             catch
             {

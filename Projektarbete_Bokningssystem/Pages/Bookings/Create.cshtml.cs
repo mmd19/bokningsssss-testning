@@ -64,20 +64,6 @@ namespace Projektarbete_Bokningssystem.Pages.Bookings
                 return RedirectToPage("/Admin/AdminCreate");
             }
 
-            //// Kolla om det finns några studierum i databasen
-            //if (!_context.StudyRooms.Any())
-            //{
-            //    // Om inte, skapa tre grundläggande rum
-            //    var rooms = new List<StudyRoom>
-            //{
-            //    new StudyRoom { Name = "Studierum 1" },
-            //    new StudyRoom { Name = "Studierum 2" },
-            //    new StudyRoom { Name = "Studierum 3" }
-            //};
-            //    _context.StudyRooms.AddRange(rooms);
-            //    await _context.SaveChangesAsync();
-            //}
-
             // Sätt dagens datum som standard
             Booking = new Booking
             {
