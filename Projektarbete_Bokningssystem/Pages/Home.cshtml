@@ -14,7 +14,10 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Gör en bokning</h5>
-                    <p class="card-text">Boka ett studierum för en hel dag.</p>
+                    @if (User.IsInRole("User"))
+                    {
+                        <p class="card-text">Boka ett studierum för en hel dag.</p>
+                    }
                     <a asp-page="/Bookings/Create" class="btn btn-primary">Gå till bokning</a>
                 </div>
             </div>
@@ -22,11 +25,25 @@
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">Mina bokningar</h5>
-                    <p class="card-text">Se och hantera dina befintliga bokningar.</p>
-                    <a asp-page="/Bookings/MyBookings" class="btn btn-primary">Visa mina bokningar</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <!-- If the user is an Admin, show Admin links -->
+                        <h5 class="card-title">Alla bokningar</h5>
+                        <p class="card-text">Se och hantera alla bokningar.</p>
+                        <a asp-page="/Bookings/MyBookings" class="btn btn-primary">Visa alla bokningar</a>
+                    }
+                    else
+                    {
+                        <!-- If the user is not an Admin, show User links -->
+                        <h5 class="card-title">Mina bokningar</h5>
+                        <p class="card-text">Se och hantera dina befintliga bokningar.</p>
+                        <a asp-page="/Bookings/MyBookings" class="btn btn-primary">Visa mina bokningar</a>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
