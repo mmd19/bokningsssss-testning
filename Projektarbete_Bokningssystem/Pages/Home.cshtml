@@ -14,7 +14,11 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Gör en bokning</h5>
-                    @if (User.IsInRole("User"))
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <p class="card-text">Boka ett studierum som administratör.</p>
+                    }
+                    else
                     {
                         <p class="card-text">Boka ett studierum för en hel dag.</p>
                     }
