@@ -8,8 +8,8 @@ using Projektarbete_Bokningssystem.Models;
 
 namespace Projektarbete_Bokningssystem.Pages.Admin
 {
-        [Authorize]
-        public class AllBookingsModel : PageModel
+    [Authorize(Roles = "Admin")]
+    public class AllBookingsModel : PageModel
         {
             private readonly ApplicationDbContext _context;
             private readonly UserManager<IdentityUser> _userManager;

@@ -9,7 +9,7 @@ using Projektarbete_Bokningssystem.Models;
 
 namespace Projektarbete_Bokningssystem.Pages.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminEditModel : PageModel
     {
 
