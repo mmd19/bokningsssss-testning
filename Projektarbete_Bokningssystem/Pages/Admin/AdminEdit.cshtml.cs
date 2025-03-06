@@ -95,7 +95,9 @@ namespace Projektarbete_Bokningssystem.Pages.Admin
 
             // Kontrollera att bokningen tillhör användaren
             var originalBooking = await _context.Bookings
-                .FirstOrDefaultAsync(b => b.Id == Booking.Id || b.UserId == user.Id);
+                .Include(b => b.StudyRoom)
+                .Include(b => b.User)
+                .FirstOrDefaultAsync(b => b.Id == Booking.Id /* || b.UserId == user.Id*/);
 
             if (originalBooking == null)
             {
@@ -125,15 +127,23 @@ namespace Projektarbete_Bokningssystem.Pages.Admin
                 // Lägg till en loggutskrift här
                 ViewData["Message"] = "Else körs";
                 // Uppdatera endast de fält som behövs
-                originalBooking.StudyRoomId = Booking.StudyRoomId;
-                originalBooking.BookingDate = Booking.BookingDate;
+                try
+                {
+                    originalBooking.StudyRoomId = Booking.StudyRoomId;
+                    originalBooking.BookingDate = Booking.BookingDate;
 
-                _context.Update(originalBooking);
-                await _context.SaveChangesAsync();
+                    _context.Update(originalBooking);
+                    var result = await _context.SaveChangesAsync();
 
-                ViewData["Message"] = "Bokningen har uppdaterats!";
-                // Efter att bokningen har sparats
-                return RedirectToPage("/Bookings/MyBookings");
+                    ViewData["Message"] = $"Bokningen har uppdaterats! Antal ändrade rader: {result}";
+                    return RedirectToPage("/Admin/AllBookings");
+                }
+                catch (Exception ex)
+                {
+                    ViewData["Message"] = $"Fel vid uppdatering: {ex.Message}";
+                    RoomList = new SelectList(_context.StudyRooms, "Id", "Name");
+                    return Page();
+                }
             }
         }
     }
