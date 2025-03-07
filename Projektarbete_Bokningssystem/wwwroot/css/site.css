@@ -10,9 +10,17 @@ html {
 
 /* navbaren */
 .navbar {
-    background-color: #ec7c2d !important;
-    font-family: Bahnschrift !important; /* här kan man ändra font-family */
+    background-color: #ffffff !important;
+    font-family: 'Segoe UI' !important; /* här kan man ändra font-family */
     font-size: 18px;
+}
+
+.navbar .navbar-brand[href="/"] { /* länken brevid loggan i navbaren*/
+    color: #0a0a0a !important;
+}
+
+.navbar .nav-link, .nav .nav-link { /*ändra navbar länkar text*/
+    color: #0a0a0a !important;
 }
 
 /*style på loggan*/
@@ -20,7 +28,7 @@ html {
     height: 50px;
     width: 150px;
     margin-right: 10px; /* mellanrum mellan loggan och texten */
-    border: 2px solid #FFA500; /* ändra färg på border här ! */
+    /*border: 2px solid #FFA500;*/ /* ändra färg på border här ! */
     border-radius: 4px;
     padding: 5px 5px; /* padding och bakgrundsfärg så det blir mellanrum mellan border och bild */
     background-color: #ffffff;
@@ -37,8 +45,40 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: ffffff; /* här kan man ändra färg till hela bodyn */
-    font-family: Bahnschrift; /* ändra font-family */
+    background-color: #f8f7f2; /* här kan man ändra färg till hela bodyn */
+    font-family: 'Segoe UI'; /* ändra font-family */
+    
+}
+
+.footer {
+    background-color: #0A3B3B;
+    color: white;
+}
+
+.footer a {
+        color: #70c8c8;
+}
+
+/* Ändra btn-primary */
+/*.btn-primary {
+    background-color: #0d6efd !important;*/ /* Bootstrap 5 standard blå färg */
+    /*border-color: #0d6efd !important;
+}
+
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-primary:focus {
+    background-color: #0b5ed7 !important;*/ /* Mörkare blå för hover/active/focus */
+        /*border-color: #0a58ca !important;
+}*/
+.btn-primary {
+    background-color: #E04815 !important;
+    border-color: #E04815 !important;
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #DB7137 !important;
+    border-color: #DB7137 !important;
 }
 
 /* Kalender stilar */
