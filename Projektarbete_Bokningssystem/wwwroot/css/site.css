@@ -59,18 +59,22 @@ body {
         color: #70c8c8;
 }
 
-/* Ändra btn-primary */
-/*.btn-primary {
-    background-color: #0d6efd !important;*/ /* Bootstrap 5 standard blå färg */
-    /*border-color: #0d6efd !important;
+
+/*Ändra-knapparna är blå*/
+form[method="post"] a.btn.btn-sm.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
-    .btn-primary:hover,
-    .btn-primary:active,
-    .btn-primary:focus {
-    background-color: #0b5ed7 !important;*/ /* Mörkare blå för hover/active/focus */
-        /*border-color: #0a58ca !important;
-}*/
+form[method="post"] a.btn.btn-sm.btn-primary:hover,
+form[method="post"] a.btn.btn-sm.btn-primary:active,
+form[method="post"] a.btn.btn-sm.btn-primary:focus {
+    background-color: #0b5ed7 !important;
+    border-color: #0a58ca !important;
+}
+
+
+/* Orange färg på primary knapp */
 .btn-primary {
     background-color: #E04815 !important;
     border-color: #E04815 !important;
@@ -108,9 +112,10 @@ body {
 
 /* Hovra över ett datum */
 .fc-day:hover {
-    background-color: #f8f9fa;
+    background-color: #ffd6a5;
     cursor: pointer;
 }
+
 
 /* Kalender responsivitet på mindre skärmar */
 @media (max-width: 768px) {
