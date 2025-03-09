@@ -1,0 +1,22 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Registreringsbekfräftelse";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    <a id="confirm-link" href="@Model.EmailConfirmationUrl">Klicka här för att bekfräfta ditt konto</a>
+</p>
+    }
+    else
+    {
+<p>
+            Kontrollera din e-post för att bekräfta ditt konto
+</p>
+    }
+}
+
