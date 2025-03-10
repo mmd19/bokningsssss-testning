@@ -31,14 +31,14 @@
                 <div class="card-body">
                     @if (User.IsInRole("Admin"))
                     {
-                        <!-- If the user is an Admin, show Admin links -->
+                        <!-- Om användaren är admin -->
                         <h5 class="card-title">Alla bokningar</h5>
                         <p class="card-text">Se och hantera alla bokningar.</p>
                         <a asp-page="/Admin/AllBookings" class="btn btn-primary">Visa alla bokningar</a>
                     }
                     else
                     {
-                        <!-- If the user is not an Admin, show User links -->
+                        <!-- Om användaren är user -->
                         <h5 class="card-title">Mina bokningar</h5>
                         <p class="card-text">Se och hantera dina befintliga bokningar.</p>
                         <a asp-page="/Bookings/MyBookings" class="btn btn-primary">Visa mina bokningar</a>

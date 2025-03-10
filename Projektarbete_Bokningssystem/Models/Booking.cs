@@ -11,7 +11,7 @@ namespace Projektarbete_Bokningssystem.Models
         public string? UserId { get; set; }
         public int StudyRoomId { get; set; }
 
-        // Datum för bokningen (en hel dag?)
+        // Datum för bokningen
         public DateTime BookingDate { get; set; }
 
         // När bokningen skapades
