@@ -13,7 +13,9 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <!-- Newton Logga -->
-                <img src="~/css/images/newton.logga.png" alt="Newton Logga" style="height: 40px;" class="navbar-logga" />
+                <a asp-area="" asp-page="/Index">
+                    <img src="~/css/images/newton.logga.png" alt="Newton Logga" style="height: 40px;" class="navbar-logga" />
+                </a>
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Bokningssystem</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +27,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Home">Hem</a>
                         </li>
 
-                        <!-- If the user is an Admin, show Admin links -->
+                        <!-- Om användaren är admin -->
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -37,7 +39,7 @@
                         }
                         else
                         {
-                            <!-- If the user is not an Admin, show User links -->
+                            <!-- Om användaren är user -->
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Bookings/Create">Ny bokning</a>
                             </li>
