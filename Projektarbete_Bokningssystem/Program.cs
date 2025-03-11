@@ -13,23 +13,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//Lägg till UserRoles för att kunna använda roller
+//Lï¿½gg till UserRoles fï¿½r att kunna anvï¿½nda roller
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
 
-//Oinloggade användare skickas till inloggningssidan
+//Oinloggade anvï¿½ndare skickas till inloggningssidan
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login"; // Omdirigera till inloggningssidan
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // Omdirigera vid saknad behörighet
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // Omdirigera vid saknad behï¿½righet
 });
 
 var app = builder.Build();
 
-// Scope för att kunna använda RollManager
+// Scope fï¿½r att kunna anvï¿½nda RollManager
 var scope = app.Services.CreateScope();
 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 RoleSeeder.SeedRolesAsync(roleManager).Wait();
