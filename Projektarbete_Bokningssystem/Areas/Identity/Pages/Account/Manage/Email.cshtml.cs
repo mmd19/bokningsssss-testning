@@ -69,7 +69,7 @@ namespace Projektarbete_Bokningssystem.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Ny e-post")]
             public string NewEmail { get; set; }
         }
 
