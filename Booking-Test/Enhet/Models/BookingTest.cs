@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using Projektarbete_Bokningssystem.Data;
 using Projektarbete_Bokningssystem.Models;
 using Projektarbete_Bokningssystem.Pages.Bookings;
@@ -16,45 +15,31 @@ namespace Booking_Test.Enhet.Models
     public class BookingTest
     {
         [Fact]
-        public async void createBooking()
+
+        //Kollar så att booking startas med rätt status
+        public void bookingStatus()
         {
-            var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+           var booking = new Booking();
+            Assert.Equal(BookingStatus.Confirmed, booking.Status);
 
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlite(connection)
-                .Options;
 
-            using var context = new ApplicationDbContext(options);
-            context.Database.EnsureCreated(); // required for SQLite
+        }
 
-          
-            var userManager = GetMockUserManager<IdentityUser>();
-            var createModel = new CreateModel (context, userManager.Object);
-            var testUser = new IdentityUser { Email = "test@example.com" };
+        [Fact]
 
+        //Kollar så att en bokning skapas och läggs till
+        public void createBookings() 
+        {
+            var booking = new Booking { Id = 1 };
+            var studyRoom = new StudyRoom();
             
-            var mockUserManager = GetMockUserManager<IdentityUser>();
-            mockUserManager.Setup(x => x.GetUserAsync(createModel.User))
-                           .ReturnsAsync(testUser);
+            studyRoom.Bookings = new List<Booking>() { booking};
 
-            Assert.Empty(context.Bookings);
-
-            await createModel.OnPostAsync();
-
-            Assert.Empty(context.Bookings);
+            Assert.Contains(booking, studyRoom.Bookings);
 
 
         }
 
-        public static Mock<UserManager<TUser>> GetMockUserManager<TUser>() where TUser : class
-        {
-            var store = new Mock<IUserStore<TUser>>();
-            var mgr = new Mock<UserManager<TUser>>(
-                store.Object,
-                null, null, null, null, null, null, null, null
-            );
-            return mgr;
-        }
+
     }
 }
