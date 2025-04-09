@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace Booking_Test.Enhet.Pages
 {
-    internal class MyBookingsTest
+    public class CreateTest
     {
+        [Fact]
+        public void hej()
+        {
+
+        }
+        
     }
 }
