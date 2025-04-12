@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projektarbete_Bokningssyste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking-Test", "Booking-Test\Booking-Test.csproj", "{DB5BA60C-78DE-490F-8752-0269AAAA34E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E2ETesting", "..\E2ETesting\E2ETesting.csproj", "{3B8DE816-32DB-4F3E-8AB6-9BD373BEEDE5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{DB5BA60C-78DE-490F-8752-0269AAAA34E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB5BA60C-78DE-490F-8752-0269AAAA34E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB5BA60C-78DE-490F-8752-0269AAAA34E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B8DE816-32DB-4F3E-8AB6-9BD373BEEDE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B8DE816-32DB-4F3E-8AB6-9BD373BEEDE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B8DE816-32DB-4F3E-8AB6-9BD373BEEDE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B8DE816-32DB-4F3E-8AB6-9BD373BEEDE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

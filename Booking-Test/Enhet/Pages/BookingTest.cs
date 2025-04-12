@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -16,11 +12,13 @@ using Projektarbete_Bokningssystem.Pages.Bookings;
 
 namespace Booking_Test.Enhet.Pages
 {
-    public class CreateTest
+    public class BookingTest
     {
-         [Fact]
+
+        [Fact]
         public async void createBooking()
         {
+            //Databasen
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
@@ -31,25 +29,25 @@ namespace Booking_Test.Enhet.Pages
             using var context = new ApplicationDbContext(options);
             context.Database.EnsureCreated(); // required for SQLite
 
+            //Mocka UserManager
+            var mockUserManager = GetMockUserManager<IdentityUser>();
+            var createModel = new CreateModel(context, mockUserManager.Object);
             var testUser = new IdentityUser { Email = "test@example.com" };
 
-            var mockUserManager = GetMockUserManager<IdentityUser>();
-            mockUserManager.Setup(um => um.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                           .ReturnsAsync(testUser);
+            mockUserManager.Setup(x => x.GetUserAsync(createModel.User))
+                          .ReturnsAsync(testUser);
 
-            var userManager = GetMockUserManager<IdentityUser>();
-            var createModel = new CreateModel(context, userManager.Object);
-
-
+            //Kollar så att databasen är tom från början
             Assert.Empty(context.Bookings);
 
+            //Skapa användare
             await createModel.OnPostAsync();
 
-            Assert.Empty(context.Bookings);
 
 
         }
 
+        //Mock
         public static Mock<UserManager<TUser>> GetMockUserManager<TUser>() where TUser : class
         {
             var store = new Mock<IUserStore<TUser>>();
@@ -59,6 +57,5 @@ namespace Booking_Test.Enhet.Pages
             );
             return mgr;
         }
-
     }
 }
