@@ -17,6 +17,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.0-preview-25107-01" />
     <PackageReference Include="Microsoft.Playwright" Version="1.51.0" />
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="9.0.0.1" />
+    <PackageReference Include="SpecFlow.Internal.Json" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
